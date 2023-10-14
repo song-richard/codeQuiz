@@ -2,7 +2,7 @@ let questionOne = document.getElementById('question')
 let answerOptionsSpan = document.getElementById('answerOptions')
 
 
-const quizBank = {
+const quizBank = [{
         question: "Inside which HTML element do we put the JavaScript?",
         possibleAnswers: {
             a: '<scripting',
@@ -11,21 +11,20 @@ const quizBank = {
             d: '<js>'
         },
         correctAnswer: 'b'
-    }
+    }]
 
 
 //Loop through every question in bank
 for (i = 0; i < quizBank.length; i++) {
-    const question = quizBank[i].question;
-    const answers = quizBank[i].possibleAnswers;
+    const question = quizBank.question;
     // const correctAnswer = quizBank[i].correctAnswer
 
-    questionOne.innerHTML = question
+    questionOne.textContent = question
 }
 
 //Loop through every answer in possibleAnswers and display
 
-const answers = quizBank.possibleAnswers
+const answers = quizBank[0].possibleAnswers
 const newList = document.createElement('ul')
 
 
@@ -37,8 +36,6 @@ for (item in answers) {
 
 answerOptionsSpan.appendChild(newList)
 
-
-// Append the list of answers to the answerOptions div
 
 //Function to check if user's answer matches current question's answer
 
