@@ -51,6 +51,8 @@ let aDIV = document.querySelector('#a')
 let bDIV = document.querySelector('#b')
 let cDIV = document.querySelector('#c')
 let dDIV = document.querySelector('#d')
+let rightWrongDiv = document.querySelector('#rightWrong')
+let currentScoreDiv = document.querySelector('#currentScore')
 let startQuizBtn = document.querySelector('#startQuiz-btn')
 let nextQuizBtn = document.querySelector('#nextQuestion-btn')
 //--------
@@ -92,7 +94,7 @@ nextQuizBtn.addEventListener('click', function () {
           dDIV.textContent = currentQuestion.Answer[option];
         }
       }
-
+      rightWrongDiv.textContent = ""
       currentQuestionIndex++;
     }
   });
@@ -101,13 +103,15 @@ nextQuizBtn.addEventListener('click', function () {
   let answerOptions = document.querySelectorAll('.option');
   answerOptions.forEach(function(option) {
     option.addEventListener('click', function(event) {
-      let clickedValue = event.target.getAttribute('data-value'); // Get the value using the data attribute
-      let currentQuestion = questionBank[currentQuestionIndex - 1]; // Get the current question
+      let clickedValue = event.target.getAttribute('data-value'); // Gets the value using the data attribute
+      let currentQuestion = questionBank[currentQuestionIndex - 1]; // Gets the current question
       if (clickedValue === currentQuestion.correctAnswer) {
-        currentScore++; 
-      }
+        currentScore++;
+        rightWrongDiv.textContent = "Correct!"
+      } 
       console.log("Clicked Value: " + clickedValue);
       console.log("Current Score: " + currentScore);
     });
   });
   
+//Displays if answer was right or wrong

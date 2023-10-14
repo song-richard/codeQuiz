@@ -79,6 +79,13 @@ body {
   left: 50%;
 }
 
+#currentScore {
+  margin: auto;
+  position: absolute;
+  top: 65%;
+  left: 50%;
+}
+
 #startQuiz-btn {
   margin: auto;
   position: absolute;
