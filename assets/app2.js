@@ -2,6 +2,9 @@
 let quizOn = true;
 let currentQuestionIndex = 0;
 let currentScore = 0;
+let triesRemaining = 1;
+
+console.log(currentQuestionIndex)
 
 const questionBank = [
     {
@@ -54,9 +57,31 @@ let dDIV = document.querySelector('#d')
 let rightWrongDiv = document.querySelector('#rightWrong')
 let currentScoreDiv = document.querySelector('#currentScore')
 let startQuizBtn = document.querySelector('#startQuiz-btn')
-let nextQuizBtn = document.querySelector('#nextQuestion-btn')
+let introDiv = document.querySelector('#intro')
+let highScoreUL = document.querySelector('#highScores')
 //--------
 
+function displayScoreScreen() {
+    introDiv.textContent = `Your Final Score: ${currentScore}`
+    questionDiv.style.display = 'none'
+    aDIV.style.display= 'none'
+    bDIV.style.display= 'none'
+    cDIV.style.display= 'none'
+    dDIV.style.display= 'none'
+    currentScoreDiv.style.display = 'none'
+    startQuizBtn.style.display = 'none'
+}
+
+function hideStartButton() {
+    let hideStartQuiz = document.getElementById('startQuiz-btn');
+    hideStartQuiz.style.display = 'none'
+}
+
+function displayHighScoreLog() {
+    let newLI = document.createElement('li');
+    newLI.textContent = currentScore;
+    highScoreUL.append(newLI)
+}
 
 // Function for "Start Quiz" and displays the first question
 startQuizBtn.addEventListener('click', function() {
@@ -73,16 +98,15 @@ startQuizBtn.addEventListener('click', function() {
             dDIV.textContent = questionBank[0].Answer[option];
         }
     }
+    hideStartButton()
     currentQuestionIndex++;
 });
 
-//Add EventListener to overwrite question DIV with next question
-nextQuizBtn.addEventListener('click', function () {
+function nextQuestion() {
     // Checks if there are more questions to display
     if (currentQuestionIndex < questionBank.length) {
       let currentQuestion = questionBank[currentQuestionIndex];
       questionDiv.textContent = currentQuestion.Question;
-
       for (let option in currentQuestion.Answer) {
         if (option === 'A') {
           aDIV.textContent = currentQuestion.Answer[option];
@@ -94,24 +118,38 @@ nextQuizBtn.addEventListener('click', function () {
           dDIV.textContent = currentQuestion.Answer[option];
         }
       }
-      rightWrongDiv.textContent = ""
       currentQuestionIndex++;
+      rightWrongDiv.textContent = ""
+    } else {
+        if (currentQuestionIndex >= 4) {
+            displayScoreScreen() 
+            displayHighScoreLog()
+            rightWrongDiv.textContent = ""
+        }
     }
-  });
+  }
 
 //Add Event.target to check and increment score
-  let answerOptions = document.querySelectorAll('.option');
-  answerOptions.forEach(function(option) {
-    option.addEventListener('click', function(event) {
-      let clickedValue = event.target.getAttribute('data-value'); // Gets the value using the data attribute
-      let currentQuestion = questionBank[currentQuestionIndex - 1]; // Gets the current question
-      if (clickedValue === currentQuestion.correctAnswer) {
-        currentScore++;
-        rightWrongDiv.textContent = "Correct!"
-      } 
-      console.log("Clicked Value: " + clickedValue);
-      console.log("Current Score: " + currentScore);
+let answerOptions = document.querySelectorAll('.option');
+answerOptions.forEach(function(option) {
+option.addEventListener('click', function(event) {
+    let clickedValue = event.target.getAttribute('data-value'); // Gets the value using the data attribute
+    let currentQuestion = questionBank[currentQuestionIndex - 1]; // Gets the current question
+    if (clickedValue === currentQuestion.correctAnswer) {
+    currentScore++;
+    currentScoreDiv.textContent = `Current Score: ${currentScore}`
+    rightWrongDiv.textContent = "Correct!"
+    nextQuestion()
+    } else {
+        rightWrongDiv.textContent = "Incorrect!"
+        nextQuestion()
+    }
+    console.log("Clicked Value: " + clickedValue);
+    console.log("Current Score: " + currentScore);
     });
-  });
+});
   
-//Displays if answer was right or wrong
+
+
+//Make Score Screen
+//Log high scores to local storage

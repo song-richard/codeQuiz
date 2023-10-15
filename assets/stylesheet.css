@@ -31,16 +31,13 @@ body {
   /* left: 50%; */
 }
 
-/* #answerOptions {
-  border: solid black ;
-  margin: auto;
+#highScores {
   position: absolute;
-  top: 45%;
+  top: 30%;
   left: 50%;
-} */
+}
 
 #questionDiv {
-  border: black solid;
   margin: auto;
   position: absolute;
   top: 35%;
@@ -48,31 +45,38 @@ body {
 }
 
 #a {
-  border: black solid;
+  /* border: black solid; */
+  margin: auto;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+}
+
+#b {
+  /* border: black solid; */
   margin: auto;
   position: absolute;
   top: 45%;
   left: 50%;
 }
 
-#b {
-  border: black solid;
+#c {
+  /* border: black solid; */
   margin: auto;
   position: absolute;
   top: 50%;
   left: 50%;
 }
 
-#c {
-  border: black solid;
+#d {
+  /* border: black solid; */
   margin: auto;
   position: absolute;
   top: 55%;
   left: 50%;
 }
 
-#d {
-  border: black solid;
+#triesRemainingDiv {
   margin: auto;
   position: absolute;
   top: 60%;
@@ -100,9 +104,8 @@ body {
   left: 60%;
 }
 
-
 #rightWrong {
-  border: solid black ;
+  /* border: solid black ; */
   margin: auto;
   position: absolute;
   top: 75%;
