@@ -31,11 +31,9 @@ body {
 
 #intro {
   border: solid black ;
-  /* margin: auto; */
   position: absolute;
   top: 25%;
   left: 50%;
-  /* left: 50%; */
 }
 
 #highScores {
@@ -52,7 +50,6 @@ body {
 }
 
 #a {
-  /* border: black solid; */
   margin: auto;
   position: absolute;
   top: 40%;
@@ -60,7 +57,6 @@ body {
 }
 
 #b {
-  /* border: black solid; */
   margin: auto;
   position: absolute;
   top: 45%;
@@ -68,7 +64,6 @@ body {
 }
 
 #c {
-  /* border: black solid; */
   margin: auto;
   position: absolute;
   top: 50%;
@@ -76,31 +71,37 @@ body {
 }
 
 #d {
-  /* border: black solid; */
   margin: auto;
   position: absolute;
   top: 55%;
   left: 50%;
 }
 
-#triesRemainingDiv {
+#timer {
   margin: auto;
   position: absolute;
-  top: 60%;
+  top: 28%;
   left: 50%;
 }
 
-#currentScore {
+#triesRemainingDiv {
   margin: auto;
   position: absolute;
   top: 65%;
   left: 50%;
 }
 
-#startQuiz-btn {
+#currentScore {
   margin: auto;
   position: absolute;
   top: 70%;
+  left: 50%;
+}
+
+#startQuiz-btn {
+  margin: auto;
+  position: absolute;
+  top: 75%;
   left: 50%;
 }
 
@@ -112,7 +113,6 @@ body {
 }
 
 #rightWrong {
-  /* border: solid black ; */
   margin: auto;
   position: absolute;
   top: 75%;

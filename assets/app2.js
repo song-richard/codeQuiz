@@ -2,6 +2,8 @@
 let currentQuestionIndex = 0;
 let currentScore = 0;
 let triesRemaining = 1;
+let timer;
+const timerDuration = 30;
 
 const questionBank = [
     {
@@ -59,7 +61,8 @@ let highScoreForm = document.querySelector('#highScoreForm')
 let submitScoreBtn = document.querySelector('#submitScore')
 let showHighScoreBtn = document.querySelector('#showHighScores')
 let userNameInput = document.querySelector('#userName')
-//--------
+let timerDisplay = document.querySelector('#timerDiv')
+//-------------
 
 //Helper Functions
 
@@ -83,10 +86,42 @@ function displayHighSchoolForm() {
     highScoreForm.style.display = 'inline'
 }
 
-//--------
+function updateTimerDisplay(timeLeft) {
+    timerDisplay.textContent = `Time Left: ${timeLeft} seconds`;
+}
 
-// Function for "Start Quiz" and displays the first question
+//Add Timer
+function startTimer() {
+    let timeLeft = timerDuration; //Sets the initial time from stored variable
+
+    function update() {
+        updateTimerDisplay(timeLeft);
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            displayScoreScreen();
+            displayHighSchoolForm();
+        } else {
+            timeLeft--;
+        }
+    }
+    update(); //Update the timer right before starting the interval
+    //Clear any existing timers
+    if (timer) {
+        clearInterval(timer);
+    }
+    timer = setInterval(update, 1000); //Updates the timer every 1 second
+}
+
+function stopTimer() {
+    clearInterval(timer);
+    timerDisplay.textContent = '';
+}
+
+//-------------
+
+//Function for "Start Quiz" and displays the first question
 startQuizBtn.addEventListener('click', function() {
+    startTimer()
     questionDiv.textContent = questionBank[0].Question;
 
     for (let option in questionBank[0].Answer) {
@@ -102,32 +137,35 @@ startQuizBtn.addEventListener('click', function() {
     }
     hideStartButton()
     currentQuestionIndex++;
+    startTimer()
 });
 
 function nextQuestion() {
+    stopTimer()
     // Checks if there are more questions to display
     if (currentQuestionIndex < questionBank.length) {
-      let currentQuestion = questionBank[currentQuestionIndex];
-      questionDiv.textContent = currentQuestion.Question;
-      for (let option in currentQuestion.Answer) {
-        if (option === 'A') {
-          aDIV.textContent = currentQuestion.Answer[option];
-        } else if (option === 'B') {
-          bDIV.textContent = currentQuestion.Answer[option];
-        } else if (option === 'C') {
-          cDIV.textContent = currentQuestion.Answer[option];
-        } else if (option === 'D') {
-          dDIV.textContent = currentQuestion.Answer[option];
+        startTimer()
+        let currentQuestion = questionBank[currentQuestionIndex];
+        questionDiv.textContent = currentQuestion.Question;
+        for (let option in currentQuestion.Answer) {
+            if (option === 'A') {
+            aDIV.textContent = currentQuestion.Answer[option];
+            } else if (option === 'B') {
+            bDIV.textContent = currentQuestion.Answer[option];
+            } else if (option === 'C') {
+            cDIV.textContent = currentQuestion.Answer[option];
+            } else if (option === 'D') {
+            dDIV.textContent = currentQuestion.Answer[option];
+            }
         }
-      }
-      currentQuestionIndex++;
-    } else {
-        if (currentQuestionIndex >= 4) {
-            displayScoreScreen() 
-            displayHighSchoolForm()
+        currentQuestionIndex++;
+        } else {
+            if (currentQuestionIndex >= 4) {
+                displayScoreScreen() 
+                displayHighSchoolForm()
+            }
         }
     }
-  }
 
 //Add Event.target to check and increment score
 let answerOptions = document.querySelectorAll('.option');
