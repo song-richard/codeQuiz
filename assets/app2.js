@@ -1,10 +1,7 @@
 
-let quizOn = true;
 let currentQuestionIndex = 0;
 let currentScore = 0;
 let triesRemaining = 1;
-
-console.log(currentQuestionIndex)
 
 const questionBank = [
     {
@@ -54,12 +51,17 @@ let aDIV = document.querySelector('#a')
 let bDIV = document.querySelector('#b')
 let cDIV = document.querySelector('#c')
 let dDIV = document.querySelector('#d')
-let rightWrongDiv = document.querySelector('#rightWrong')
 let currentScoreDiv = document.querySelector('#currentScore')
 let startQuizBtn = document.querySelector('#startQuiz-btn')
 let introDiv = document.querySelector('#intro')
 let highScoreUL = document.querySelector('#highScores')
+let highScoreForm = document.querySelector('#highScoreForm')
+let submitScoreBtn = document.querySelector('#submitScore')
+let showHighScoreBtn = document.querySelector('#showHighScores')
+let userNameInput = document.querySelector('#userName')
 //--------
+
+//Helper Functions
 
 function displayScoreScreen() {
     introDiv.textContent = `Your Final Score: ${currentScore}`
@@ -77,11 +79,11 @@ function hideStartButton() {
     hideStartQuiz.style.display = 'none'
 }
 
-function displayHighScoreLog() {
-    let newLI = document.createElement('li');
-    newLI.textContent = currentScore;
-    highScoreUL.append(newLI)
+function displayHighSchoolForm() {
+    highScoreForm.style.display = 'inline'
 }
+
+//--------
 
 // Function for "Start Quiz" and displays the first question
 startQuizBtn.addEventListener('click', function() {
@@ -119,12 +121,10 @@ function nextQuestion() {
         }
       }
       currentQuestionIndex++;
-      rightWrongDiv.textContent = ""
     } else {
         if (currentQuestionIndex >= 4) {
             displayScoreScreen() 
-            displayHighScoreLog()
-            rightWrongDiv.textContent = ""
+            displayHighSchoolForm()
         }
     }
   }
@@ -137,19 +137,58 @@ option.addEventListener('click', function(event) {
     let currentQuestion = questionBank[currentQuestionIndex - 1]; // Gets the current question
     if (clickedValue === currentQuestion.correctAnswer) {
     currentScore++;
-    currentScoreDiv.textContent = `Current Score: ${currentScore}`
-    rightWrongDiv.textContent = "Correct!"
+    currentScoreDiv.textContent = `Correct! Current Score: ${currentScore}`
     nextQuestion()
     } else {
-        rightWrongDiv.textContent = "Incorrect!"
+        currentScoreDiv.textContent = `Incorrect! Current Score: ${currentScore}`
         nextQuestion()
     }
     console.log("Clicked Value: " + clickedValue);
     console.log("Current Score: " + currentScore);
     });
 });
-  
 
+//
 
-//Make Score Screen
-//Log high scores to local storage
+let highScores = [];
+
+//Submit Score Button
+submitScoreBtn.addEventListener('click', function() {
+    let userNameValue = document.querySelector('#userName').value;
+    let highScoreValue = currentScore;
+
+    // Create an object to store the username and score
+    const userScore = {
+        username: userNameValue,
+        score: highScoreValue,
+    };
+
+    // Add the user score to the highScores array
+    highScores.push(userScore);
+
+    // Save the updated highScores array in local storage
+    localStorage.setItem('highScores', JSON.stringify(highScores));
+    userNameInput.value = ""
+});
+
+//Show High Score Button
+showHighScoreBtn.addEventListener('click', function() {
+    // Clear the current high score list in the UI
+    highScoreUL.innerHTML = '';
+
+    // Sort the highScores array in descending order of scores
+    highScores.sort((a, b) => b.score - a.score);
+
+    // Display each high score in the UI
+    highScores.forEach(score => {
+        let newLI = document.createElement('li');
+        newLI.textContent = `Name: ${score.username}  Score: ${score.score}`;
+        highScoreUL.append(newLI);
+    });
+});
+
+// Get high scores from local storage if available
+const storedHighScores = localStorage.getItem('highScores');
+if (storedHighScores) {
+    highScores = JSON.parse(storedHighScores);
+}
