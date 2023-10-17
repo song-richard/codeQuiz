@@ -121,3 +121,7 @@ body {
   top: 75%;
   left: 50%;
 }
+
+#submitScore, #showHighScores, #userName {
+  background-color: wheat;
+}
