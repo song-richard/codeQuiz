@@ -17,3 +17,4 @@ https://github.com/song-richard/codeQuiz
 
 ## Link to Deployed Application
 
+https://song-richard.github.io/codeQuiz/
